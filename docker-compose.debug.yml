@@ -11,12 +11,11 @@ services:
       args:
         SERVER_PORT: ${SERVER_PORT}
     volumes:
-      - ./app:/app/app
+      - ./app:/workspace/app
     depends_on:
       - db
     ports:
       - ${SERVER_PORT}:${SERVER_PORT}
-      - 5678:5678
 
   db:
     image: postgres:latest
@@ -27,6 +26,8 @@ services:
       POSTGRES_USER: ${DB_USER}
       POSTGRES_DB: ${DB_NAME}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - ${DB_PORT}:${DB_PORT}
 
 volumes:
   postgres-data:

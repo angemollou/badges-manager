@@ -3,6 +3,7 @@
 
 **/__pycache__
 **/*.sqlite?
+**/*.session.sql
 
 **/.env
 
