@@ -11,7 +11,7 @@ services:
       args:
         SERVER_PORT: ${SERVER_PORT}
     volumes:
-      - ./app:/workspace/app
+      - ./apps:/workspace/app
     depends_on:
       - db
     ports:

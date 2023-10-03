@@ -5,17 +5,10 @@ from .model3d import Model3d
 
 class Badge(models.Model):
     name = models.CharField(max_length=255, verbose_name="Name")
-    type = models.CharField(max_length=255, verbose_name="Badge choice")
     icon = models.ForeignKey(Model3d, on_delete=models.PROTECT, verbose_name="Icon")
     description = models.TextField(verbose_name="Description")
     status = models.CharField(max_length=255, verbose_name="Status")
-    issuer = models.ForeignKey(
-        BadgeUser,
-        on_delete=models.CASCADE,
-        verbose_name="Issuer",
-        related_name="issued_badges",
-    )
-    criteria = models.TextField(verbose_name="Criteria")
+    criteria = models.IntegerField(verbose_name="Criteria")
 
     def __str__(self):
         return self.name
