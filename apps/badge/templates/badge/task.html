@@ -1,0 +1,8 @@
+<div>
+  <h4><a href="{% url 'task_detail' task.id %}" style="text-decoration:none;">{{ task.name }}</a></h4>
+  <div>
+    <div>Responsible: {{ task.responsible }}</div>
+    <div>Description:</div>
+    <pre>{{ task.description }}</pre>
+  </div>
+</div>

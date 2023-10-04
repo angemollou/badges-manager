@@ -1,18 +1,18 @@
 from django.conf import settings
 from django.urls import include, path
-from .views import index
+from .views import views, api
 from rest_framework import routers
-from badge import views
 
 router = routers.DefaultRouter()
-router.register(r"users", views.UserViewSet)
-router.register(r"badgeUsers", views.BadgeUserViewSet)
-router.register(r"model3ds", views.Model3dViewSet)
-router.register(r"badges", views.BadgeViewSet)
-router.register(r"assertions", views.AssertionViewSet)
+router.register(r"users", api.UserViewSet)
+router.register(r"badgeUsers", api.BadgeUserViewSet)
+router.register(r"model3ds", api.Model3dViewSet)
+router.register(r"badges", api.BadgeViewSet)
+router.register(r"assertions", api.AssertionViewSet)
 
 urlpatterns = [
-    path("", index.index, name="index"),
+    path("", views.index, name="index"),
+    path("tasks/<int:task_id>", views.detail, name="task_detail"),
     path("", include(router.urls)),
 ]
 

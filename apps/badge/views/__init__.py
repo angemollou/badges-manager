@@ -1,8 +1,2 @@
-from . import index
-from .api import (
-    UserViewSet,
-    BadgeUserViewSet,
-    Model3dViewSet,
-    BadgeViewSet,
-    AssertionViewSet,
-)
+from . import views
+from . import api

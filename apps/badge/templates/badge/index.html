@@ -1,0 +1,17 @@
+{% if current_user_tasks %}
+<div>
+  {% for task in current_user_tasks %}
+  <div>
+    <h4><a href="{% url 'task_detail' task.id %}" style="text-decoration:none;">{{ task.name }}</a></h4>
+    <div>
+      <div>Responsible: {{ task.responsible }}</div>
+      <div>Description:</div>
+      <pre>{{ task.description }}</pre>
+    </div>
+  </div>
+  <hr />
+  {% endfor %}
+</div>
+{% else %}
+<p>No task is assigned to you. You're free!</p>
+{% endif %}
