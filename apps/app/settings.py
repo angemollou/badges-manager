@@ -43,7 +43,6 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "badge.apps.BadgeConfig",
-    # "django_cron",
 ]
 
 MIDDLEWARE = [
@@ -54,10 +53,6 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-]
-
-CRON_CLASSES = [
-    "badge.cron.AssertBadgeJob",
 ]
 
 

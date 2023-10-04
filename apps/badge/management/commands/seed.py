@@ -32,20 +32,26 @@ class Command(BaseCommand):
             return
 
         # Creating 15 badges
-        for model3d_data, badge_data  in zip(MODEL3D_DATA, BADGE_DATA):
+        for model3d_data, badge_data in zip(MODEL3D_DATA, BADGE_DATA):
             self.create_badge(model3d_data, badge_data)
 
     def clear_data(self):
         """Deletes all the table data"""
         self.stdout.write("Delete Badge instances")
-        Badge.objects.all().delete()
+        try:
+            Badge.objects.all().delete()
+        except Exception as e:
+            raise CommandError(e)
 
     def create_badge(self, model3d_data, badge_data):
         """Creates an badge object combining different elements from the list"""
-        self.stdout.write("Creating badge")
-        model3d = Model3d(**model3d_data)
-        model3d.save()
-        badge = Badge(**badge_data, icon=model3d)
-        badge.save()
-        self.stdout.write("{} badge created.".format(badge))
-        return badge
+        try:
+            self.stdout.write("Creating badge")
+            model3d = Model3d(**model3d_data)
+            model3d.save()
+            badge = Badge(**badge_data, icon=model3d)
+            badge.save()
+            self.stdout.write("{} badge created.".format(badge))
+            return badge
+        except Exception as e:
+            raise CommandError(e)
