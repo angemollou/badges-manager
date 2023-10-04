@@ -4,11 +4,20 @@ from .model3d import Model3d
 
 
 class Badge(models.Model):
+    STATUS = [
+        ("active", "Active"),
+        ("published", "Published"),
+        ("draft", "Draft"),
+    ]
     name = models.CharField(max_length=255, verbose_name="Name", unique=True)
     icon = models.ForeignKey(Model3d, on_delete=models.PROTECT, verbose_name="Icon")
     description = models.TextField(verbose_name="Description", blank=True, default="")
     status = models.CharField(
-        max_length=255, verbose_name="Status", blank=True, default="active"
+        max_length=255,
+        verbose_name="Status",
+        blank=True,
+        default="active",
+        choices=STATUS,
     )
     criteria = models.IntegerField(verbose_name="Criteria", default=0)
 
