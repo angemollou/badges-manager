@@ -1,6 +1,10 @@
 from django.core.management.base import BaseCommand, CommandError
-from badge.models.badge import Badge
+from badge.models.badge import Badge, Assertion
 from badge.models.model3d import Model3d
+from django.contrib.auth.models import User
+from badge.models.user import BadgeUser
+from django.db.models import Q
+
 from ...data.badge import BADGE_DATA, MODEL3D_DATA
 
 """ Clear all data and creates badges """
@@ -31,9 +35,12 @@ class Command(BaseCommand):
         if mode == MODE_CLEAR:
             return
 
-        # Creating 15 badges
+        # Insert badges data
         for model3d_data, badge_data in zip(MODEL3D_DATA, BADGE_DATA):
             self.create_badge(model3d_data, badge_data)
+
+        # Create BadgeUsers
+        self.create_badge_users()
 
     def clear_data(self):
         """Deletes all the table data"""
@@ -53,5 +60,36 @@ class Command(BaseCommand):
             badge.save()
             self.stdout.write("{} badge created.".format(badge))
             return badge
+        except Exception as e:
+            raise CommandError(e)
+
+    def create_badge_users(self):
+        """Creates badge users from admins accounts"""
+        try:
+            self.stdout.write("Creating badge users")
+            badge_users = []
+            for user in User.objects.all():
+                badge_user = BadgeUser(user=user)
+                badge_user.save()
+                self.assert_user_default_badge(badge_user)
+                self.stdout.write("{} badge user created.".format(badge_user))
+                badge_users.append(badge_user)
+            return badge_users
+        except Exception as e:
+            raise CommandError(e)
+
+    def assert_user_default_badge(self, badge_user):
+        """Assert user the default badge"""
+        try:
+            self.stdout.write("Asserting {} the default badge".format(badge_user))
+            default_badge = Badge.objects.get(Q(name="Default") | Q(criteria=0))
+            assertion = Assertion(
+                recipient=badge_user,
+                badge=default_badge,
+                verifier=badge_user,
+            )
+            assertion.save()
+            self.stdout.write("{} assertion created.".format(assertion))
+            return assertion
         except Exception as e:
             raise CommandError(e)
