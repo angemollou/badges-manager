@@ -27,7 +27,7 @@ def complete_task(request, task_id):
     task = get_object_or_404(Task, pk=task_id)
     try:
         # is_completed = request.POST["is_completed"]
-        task.is_completed = not task.is_completed
+        task.is_completed = not (task.is_completed or False)
     except Exception as e:
         return render(
             request,
