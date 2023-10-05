@@ -13,6 +13,7 @@ router.register(r"assertions", api.AssertionViewSet)
 urlpatterns = [
     path("", views.index, name="index"),
     path("tasks/<int:task_id>", views.detail, name="task_detail"),
+    path("tasks/<int:task_id>/complete", views.complete_task, name="complete_task"),
     path("", include(router.urls)),
 ]
 

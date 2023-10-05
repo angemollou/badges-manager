@@ -1,8 +1,27 @@
-<div>
-  <h4><a href="{% url 'task_detail' task.id %}" style="text-decoration:none;">{{ task.name }}</a></h4>
-  <div>
-    <div>Responsible: {{ task.responsible }}</div>
-    <div>Description:</div>
-    <pre>{{ task.description }}</pre>
-  </div>
-</div>
+<form action="{% url 'complete_task' task.id %}" method="post">
+  {% csrf_token %}
+  <fieldset>
+    <legend>
+      <h1>{{ task.name }}</h1>
+    </legend>
+    {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+    <div>
+      <div>Responsible: {{ task.responsible }}</div>
+      <div>
+        <label>Completed ?</label>
+        <input id="isCompleted" type="checkbox" name="is_completed" />
+      </div>
+      <div>Description:</div>
+      <pre>{{ task.description }}</pre>
+    </div>
+  </fieldset>
+</form>
+<script>
+  (function () {
+    isCompletedInput = document.getElementById('isCompleted')
+    form = document.getElementsByTagName('form')[0]
+    isCompletedInput.addEventListener('change', (e) => {
+      form.submit()
+    })
+  })();
+</script>
