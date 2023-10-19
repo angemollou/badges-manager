@@ -1,5 +1,5 @@
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 
 from badge.models.task import Task
@@ -7,6 +7,9 @@ from badge.models.user import BadgeUser
 
 
 def index(request):
+    if not request.user.is_authenticated:
+        return redirect("/admin")
+
     current_badge_user = BadgeUser.objects.get(user=request.user)
     current_user_tasks = Task.objects.filter(assignee=current_badge_user).order_by(
         "created_at"
