@@ -38,7 +38,7 @@ class Assertion(models.Model):
         BadgeUser,
         on_delete=models.CASCADE,
         verbose_name="Recipient",
-        related_name="badges",
+        related_name="assertions",
     )
     badge = models.ForeignKey(Badge, on_delete=models.CASCADE, verbose_name="Badge")
     start_date = models.DateTimeField(

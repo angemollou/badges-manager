@@ -8,7 +8,3 @@ class BadgeUser(models.Model):
 
     def __str__(self):
         return self.user.username
-
-    def set_new_score(self, points):
-        self.score += points
-        self.save()

@@ -28,4 +28,26 @@ def assert_badge(self, new_badge=False, verifier=False):
         raise e
 
 
+def try_assert_badge(self):
+    """Detect and assert to user who deserve it"""
+    try:
+        badges = badge.Badge.objects.filter(Q(criteria__lt=self.score))
+        assertions = []
+        for new_badge in badges:
+            if new_badge not in map(lambda a: a.badge, self.assertions.all()):
+                assertions.append(self.assert_badge(new_badge))
+        return assertions
+    except Exception as e:
+        raise e
+
+
+def set_new_score(self, points):
+    self.score += points
+    self.try_assert_badge()
+    self.save()
+    return self.score
+
+
 user.BadgeUser.assert_badge = assert_badge
+user.BadgeUser.try_assert_badge = try_assert_badge
+user.BadgeUser.set_new_score = set_new_score
