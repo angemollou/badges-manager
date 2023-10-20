@@ -1,5 +1,6 @@
 <form action="{% url 'complete_task' task.id %}" method="post">
   {% csrf_token %}
+  <a href="{% url 'index' %}">Home</a>
   <fieldset>
     <legend>
       <h1>{{ task.name }}</h1>
@@ -8,8 +9,12 @@
     <div>
       <div>Responsible: {{ task.responsible }}</div>
       <div>
-        <label>Completed ?</label>
+        <label>Completed: </label>
+        {% if task.is_completed %}
+        <input id="isCompleted" type="checkbox" name="is_completed" checked="" />
+        {% else %}
         <input id="isCompleted" type="checkbox" name="is_completed" />
+        {% endif %}
       </div>
       <div>Description:</div>
       <pre>{{ task.description }}</pre>

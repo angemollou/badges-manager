@@ -1,17 +1,82 @@
 {% if current_user_tasks %}
-<div>
+<div style="text-align: center;">
+  <h2>Tasks</h2>
   {% for task in current_user_tasks %}
-  <div>
-    <h4><a href="{% url 'task_detail' task.id %}" style="text-decoration:none;">{{ task.name }}</a></h4>
-    <div>
-      <div>Responsible: {{ task.responsible }}</div>
-      <div>Description:</div>
-      <pre>{{ task.description }}</pre>
-    </div>
-  </div>
-  <hr />
+  {% if not task.is_completed %}
+  <div><a href="{% url 'task_detail' task.id %}" style="text-decoration:none;">{{ task.name }}</a></div>
+  {% endif %}
   {% endfor %}
+  <h2 class="collapsible active">Completed <i class="arrow"></i></h2>
+  <div style="display: none;">
+    {% for task in current_user_tasks %}
+    {% if task.is_completed %}
+    <div><strike><a href="{% url 'task_detail' task.id %}" style="text-decoration:none;">{{ task.name }}</a></strike>
+    </div>
+    {% endif %}
+    {% endfor %}
+  </div>
 </div>
 {% else %}
 <p>No task is assigned to you. You're free!</p>
 {% endif %}
+<style>
+  /* Style the button that is used to open and close the collapsible content */
+  .collapsible {
+    background-color: #eee;
+    color: #444;
+    cursor: pointer;
+    padding: 18px;
+    /* width: 100%; */
+    border: none;
+    /* text-align: left; */
+    outline: none;
+    font-size: 15px;
+  }
+
+  .collapsible>.arrow {
+    border: solid black;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 3px;
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+  }
+
+  .collapsible.active>.arrow {
+
+    transform: rotate(-135deg);
+    -webkit-transform: rotate(-135deg);
+  }
+
+  /* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+  .active,
+  .collapsible:hover {
+    background-color: #ccc;
+  }
+
+  /* Style the collapsible content. Note: hidden by default */
+  .content {
+    padding: 0 18px;
+    display: none;
+    overflow: hidden;
+    background-color: #f1f1f1;
+  }
+</style>
+<script>
+  (function () {
+    var coll = document.getElementsByClassName("collapsible");
+    var i;
+
+    for (i = 0; i < coll.length; i++) {
+      coll[i].addEventListener("click", function () {
+        this.classList.toggle("active");
+        var content = this.nextElementSibling;
+        if (content.style.display === "block") {
+          content.style.display = "none";
+        } else {
+          content.style.display = "block";
+        }
+      });
+    }
+  })();
+</script>

@@ -1,4 +1,3 @@
-from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 
@@ -29,14 +28,13 @@ def detail(request, task_id):
 def complete_task(request, task_id):
     task = get_object_or_404(Task, pk=task_id)
     try:
-        # is_completed = request.POST["is_completed"]
         task.is_completed = not (task.is_completed or False)
+        task.save()
+        return redirect(reverse("task_detail", args=(task.id,)))
     except Exception as e:
+        print("Error: ", e)
         return render(
             request,
             "badge/task.html",
             {"task": task, "error_message": "Something went wrong!"},
         )
-    else:
-        task.save()
-        return HttpResponseRedirect(reverse("task_detail", args=(task.id,)))
