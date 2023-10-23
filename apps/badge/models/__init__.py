@@ -32,11 +32,28 @@ def try_assert_badge(self):
     """Detect and assert to user who deserve it"""
     try:
         badges = badge.Badge.objects.filter(Q(criteria__lt=self.score))
+        existing_badges = map(lambda a: a.badge, self.assertions.all())
         assertions = []
         for new_badge in badges:
-            if new_badge not in map(lambda a: a.badge, self.assertions.all()):
+            if new_badge not in existing_badges:
                 assertions.append(self.assert_badge(new_badge))
         return assertions
+    except Exception as e:
+        raise e
+
+
+def try_remove_badge(self):
+    """Detect and remove badges from user"""
+    try:
+        badges = badge.Badge.objects.filter(Q(criteria__gt=self.score))
+        existing_badges = map(lambda a: a.badge, self.assertions.all())
+        deleted_assertions = []
+        for b in badges:
+            if b in existing_badges:
+                deleted_assertions.append(
+                    badge.Assertion.objects.filter(badge=b, recipient=self).delete()
+                )
+        return deleted_assertions
     except Exception as e:
         raise e
 
@@ -44,7 +61,10 @@ def try_assert_badge(self):
 def set_new_score(self, points):
     self.score += points
     self.score = max(self.score, 0)
-    self.try_assert_badge()
+    if points < 0:
+        self.try_remove_badge()
+    else:
+        self.try_assert_badge()
     self.save()
     return self.score
 
@@ -52,3 +72,4 @@ def set_new_score(self, points):
 user.BadgeUser.assert_badge = assert_badge
 user.BadgeUser.try_assert_badge = try_assert_badge
 user.BadgeUser.set_new_score = set_new_score
+user.BadgeUser.try_remove_badge = try_remove_badge

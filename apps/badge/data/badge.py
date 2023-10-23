@@ -41,13 +41,13 @@ MODEL3D_DATA = [
     {
         "name": "Silver",
         "description": "",
-        "image": "/files/StarStruck_Gold.png",
-        "file": "/files/StarStruck_Gold.png",
+        "image": "/files/StarStruck_Silver.png",
+        "file": "/files/StarStruck_Silver.png",
     },
     {
         "name": "Gold",
         "description": "",
-        "image": "/files/StarStruck_Silver.png",
-        "file": "/files/StarStruck_Silver.png",
+        "image": "/files/StarStruck_Gold.png",
+        "file": "/files/StarStruck_Gold.png",
     },
 ]
