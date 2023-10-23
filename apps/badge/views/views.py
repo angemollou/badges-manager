@@ -8,15 +8,13 @@ from badge.models.user import BadgeUser
 def get_current_user_data(request):
     if not request.user.is_authenticated:
         return redirect("/admin")
+    
     badgeUser = BadgeUser.objects.get(user=request.user.id)
     badgeModel3ds = map(lambda a: a.badge.icon, badgeUser.assertions.all())
     return {"badgeUser": badgeUser, "badgeModel3ds": badgeModel3ds}
 
 
 def index(request):
-    if not request.user.is_authenticated:
-        return redirect("/admin")
-
     current_badge_user = BadgeUser.objects.get(user=request.user)
     current_user_tasks = Task.objects.filter(assignee=current_badge_user).order_by(
         "created_at"
@@ -30,9 +28,6 @@ def index(request):
 
 
 def detail(request, task_id):
-    if not request.user.is_authenticated:
-        return redirect("/admin")
-
     task = get_object_or_404(Task, pk=task_id)
     return render(
         request,

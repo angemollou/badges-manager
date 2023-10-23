@@ -1,5 +1,5 @@
 {% include "badge/navbar.html" %}
-<form action="{% url 'complete_task' task.id %}" method="post">
+<form id="complete-task-form" action="{% url 'complete_task' task.id %}" method="post">
   {% csrf_token %}
   <fieldset>
     <legend>
@@ -24,7 +24,7 @@
 <script>
   (function () {
     isCompletedInput = document.getElementById('isCompleted')
-    form = document.getElementsByTagName('form')[0]
+    form = document.querySelector('#complete-task-form')
     isCompletedInput.addEventListener('change', (e) => {
       form.submit()
     })
