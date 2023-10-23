@@ -1,0 +1,53 @@
+<nav>
+  <ul id="menu">
+    <li><a href="{% url 'index' %}">Dashboard</a></li>
+  </ul>
+  <ul id="userinfo">
+    <li>{{ badgeUser.user }}</li>
+    {% load static %}
+    {% for model3d in badgeModel3ds %}
+    <li class="badge"><img src="{% static model3d.image %}" alt="{{ model3d.name }} badge"
+        title="{{ model3d.name }} badge" width="39"></li>
+    {% endfor %}
+    <li>
+      <form id="logout-form" method="post" action="/admin/logout/">
+        {% csrf_token %}
+        <button type="submit" title="Logout"><i class="fa fa-sign-out"></i></button>
+      </form>
+    </li>
+  </ul>
+</nav>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+{% include "badge/common_style.html" %}
+<style>
+  nav {
+    background: #417690;
+    color: white;
+    padding: 5px 20px;
+  }
+
+  nav a {
+    text-decoration: none;
+    color: white;
+  }
+
+  nav,
+  nav>ul {
+    display: flex;
+    align-items: center;
+  }
+
+  nav>ul {
+    list-style: none;
+    gap: 15px;
+  }
+
+  nav>ul+ul {
+    margin-left: auto;
+  }
+
+  #logout-form>button {
+    border: none;
+    background: none;
+  }
+</style>

@@ -8,6 +8,7 @@ class Task(models.Model):
     is_completed = models.BooleanField(default=False, blank=True)
     created_at = models.DateTimeField(auto_now_add=True, blank=True)
     updated_at = models.DateTimeField(auto_now=True, blank=True)
+    points = models.IntegerField(default=100, blank=True)
 
     assignee = models.ForeignKey(
         BadgeUser,

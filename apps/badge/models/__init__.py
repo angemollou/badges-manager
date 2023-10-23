@@ -43,6 +43,7 @@ def try_assert_badge(self):
 
 def set_new_score(self, points):
     self.score += points
+    self.score = max(self.score, 0)
     self.try_assert_badge()
     self.save()
     return self.score

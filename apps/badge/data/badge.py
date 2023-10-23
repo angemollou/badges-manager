@@ -29,25 +29,25 @@ MODEL3D_DATA = [
     {
         "name": "Default",
         "description": "",
-        "image": "/static/files/StarStruck_SkinTone1.png",
-        "file": "/static/files/StarStruck_SkinTone1.png",
+        "image": "/files/StarStruck_SkinTone1.png",
+        "file": "/files/StarStruck_SkinTone1.png",
     },
     {
         "name": "Bronze",
         "description": "",
-        "image": "/static/files/StarStruck_Bronze.png",
-        "file": "/static/files/StarStruck_Bronze.png",
+        "image": "/files/StarStruck_Bronze.png",
+        "file": "/files/StarStruck_Bronze.png",
     },
     {
         "name": "Silver",
         "description": "",
-        "image": "/static/files/StarStruck_Gold.png",
-        "file": "/static/files/StarStruck_Gold.png",
+        "image": "/files/StarStruck_Gold.png",
+        "file": "/files/StarStruck_Gold.png",
     },
     {
         "name": "Gold",
         "description": "",
-        "image": "/static/files/StarStruck_Silver.png",
-        "file": "/static/files/StarStruck_Silver.png",
+        "image": "/files/StarStruck_Silver.png",
+        "file": "/files/StarStruck_Silver.png",
     },
 ]

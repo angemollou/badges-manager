@@ -1,24 +1,22 @@
-{% if current_user_tasks %}
-<div style="text-align: center;">
-  <h2>Tasks</h2>
+{% include "badge/navbar.html" %}
+<div class="container">
+  <h2 class="title">Tasks</h2>
   {% for task in current_user_tasks %}
   {% if not task.is_completed %}
-  <div><a href="{% url 'task_detail' task.id %}" style="text-decoration:none;">{{ task.name }}</a></div>
+  <div><a href="{% url 'task_detail' task.id %}" style="text-decoration:none;">{{ task.name }}</a> <b>+ {{task.points}}
+      pts</b></div>
   {% endif %}
   {% endfor %}
   <h2 class="collapsible active">Completed <i class="arrow"></i></h2>
   <div style="display: none;">
     {% for task in current_user_tasks %}
     {% if task.is_completed %}
-    <div><strike><a href="{% url 'task_detail' task.id %}" style="text-decoration:none;">{{ task.name }}</a></strike>
-    </div>
+    <div><strike><a href="{% url 'task_detail' task.id %}" style="text-decoration:none;">{{ task.name }}</a> <b>+
+          {{task.points}} pts</b></strike></div>
     {% endif %}
     {% endfor %}
   </div>
 </div>
-{% else %}
-<p>No task is assigned to you. You're free!</p>
-{% endif %}
 <style>
   /* Style the button that is used to open and close the collapsible content */
   .collapsible {
