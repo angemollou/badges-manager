@@ -1,9 +1,9 @@
 <nav>
-  <ul id="menu">
+  <ul id="nav-menus">
     <li><a href="{% url 'index' %}">Dashboard</a></li>
   </ul>
   <ul id="userinfo">
-    <li>{{ badgeUser.user }}</li>
+    <li>Bienvenue, {{ badgeUser.user }}.</li>
     {% load static %}
     {% for model3d in badgeModel3ds %}
     <li class="badge"><img src="{% static model3d.image %}" alt="{{ model3d.name }} badge"
@@ -26,9 +26,13 @@
     padding: 5px 20px;
   }
 
-  nav a {
+  nav a,
+  nav li {
     text-decoration: none;
     color: white;
+    font-size: 0.8875rem;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
   }
 
   nav,
@@ -44,6 +48,12 @@
 
   nav>ul+ul {
     margin-left: auto;
+  }
+
+  #nav-menus *:hover {
+    color: #f5dd5d;
+    font-weight: bold;
+    text-decoration: underline;
   }
 
   #logout-form>button {
