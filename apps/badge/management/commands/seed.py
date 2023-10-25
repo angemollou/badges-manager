@@ -1,10 +1,13 @@
+from django.conf import settings
 from django.core.management.base import BaseCommand, CommandError
 from badge.models.badge import Badge
 from badge.models.model3d import Model3d
 from django.contrib.auth.models import User
 from badge.models.user import BadgeUser
+from badge.models.task import Task
 
 from ...data.badge import BADGE_DATA, MODEL3D_DATA
+from ...data.demo.task import TASK_DATA
 
 """ Clear all data and creates badges """
 MODE_REFRESH = "refresh"
@@ -41,6 +44,11 @@ class Command(BaseCommand):
         # Create BadgeUsers
         self.create_badge_users()
 
+        # Insert demo data
+        if settings.DEBUG:
+            self.stdout.write("Creating demo data")
+            self.create_demo_task()
+
     def clear_data(self):
         """Deletes all the table data"""
         self.stdout.write("Delete Badge instances")
@@ -75,5 +83,16 @@ class Command(BaseCommand):
                 self.stdout.write("{} badge user created.".format(badge_user))
                 badge_users.append(badge_user)
             return badge_users
+        except Exception as e:
+            raise CommandError(e)
+
+    def create_demo_task(self):
+        """Creates demo task"""
+        try:
+            self.stdout.write("Creating demo task")
+            for item in TASK_DATA:
+                task = Task(**item)
+                task.save()
+                self.stdout.write("{} task created.".format(task))
         except Exception as e:
             raise CommandError(e)
