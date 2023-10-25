@@ -3,9 +3,9 @@
     <li><a href="{% url 'index' %}">Dashboard</a></li>
   </ul>
   <ul id="userinfo">
-    <li>Bienvenue, {{ badgeUser.user }}.</li>
+    <li>Bienvenue, {{ badge_user.user }}.</li>
     {% load static %}
-    {% for model3d in badgeModel3ds %}
+    {% for model3d in badge_model3ds %}
     <li class="badge"><img src="{% static model3d.image %}" alt="{{ model3d.name }} badge"
         title="{{ model3d.name }} badge" width="39"></li>
     {% endfor %}

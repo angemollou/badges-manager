@@ -9,19 +9,19 @@ BADGE_DATA = [
         "name": "Bronze",
         "description": "",
         "status": "active",
-        "criteria": 128,
+        "criteria": 2500,
     },
     {
         "name": "Silver",
         "description": "",
         "status": "active",
-        "criteria": 512,
+        "criteria": 5000,
     },
     {
         "name": "Gold",
         "description": "",
         "status": "active",
-        "criteria": 4096,
+        "criteria": 7500,
     },
 ]
 
